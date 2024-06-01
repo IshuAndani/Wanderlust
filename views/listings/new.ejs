@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') -%>
+<div id="editBody">
+  <h1 id="page-title">New Listing</h1>
+  <form action="http://localhost:3000/listings" method="post">
+    <div id="form-group-title" class="form-group">
+      <label for="title" id="form-label-title">Title:</label>
+      <input type="text" name="listing[title]" class="inpForm" id="title" required>
+    </div>
+    <div id="form-group-description" class="form-group">
+      <label for="description" id="form-label-description">Description:</label>
+      <textarea name="listing[description]" id="description" class="inpForm" rows="5" required></textarea>
+    </div>
+    <div id="form-group-image" class="form-group">
+      <label for="listing[image.url]" id="form-label-image">Image URL:</label>
+      <input type="text" name="listing[image.filename]" value="listingimage" style="display: none;">
+      <input type="url" name="listing[image.url]" id="image" class="inpForm" required>
+    </div>
+    <div id="form-group-price" class="form-group">
+      <label for="listing[price]" id="form-label-price">Price:</label>
+      <input type="number" name="listing[price]" id="price" class="inpForm" min="0" required>
+    </div>
+    <div id="form-group-location" class="form-group">
+      <label for="listing[location]" id="form-label-location">Location:</label>
+      <input type="text" name="listing[location]" id="location" class="inpForm" required>
+    </div>
+    <div id="form-group-country" class="form-group">
+      <label for="listing[country]" id="form-label-country">Country:</label>
+      <select name="listing[country]" id="country" class="inpForm" required>
+        <option disabled>Select Country</option>
+        <%- include("../includes/countries.ejs") %>
+      </select>
+    </div>
+    <div id="form-buttons">
+      <button type="submit" id="form-button-update">Add Listing</button>
+      <a href="http://localhost:3000/listings">
+        <button type="button" id="form-button-cancel">Cancel</button>
+      </a>
+    </div>
+  </form>
+</div>
