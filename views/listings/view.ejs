@@ -4,9 +4,7 @@
         <img id="viewImg" src="<%= listing.image.url %>" alt="">
         <br>
         <div id="about">
-            <a href="http://localhost:3000/listings">
-                <button id="close" class="red">x</button>
-            </a>
+            <button id="close" class="red" onclick="goBack()">x</button>
             <br>
             <b>
                 <span style="font-size: 30px; width: min-content;"><%= listing.title %></span>
@@ -26,7 +24,7 @@
             <br>
             <br>
             <div id="btns">
-                <a id="edit" class="btn an" href="http://localhost:3000/listings/<%= listing._id %>/edit">Edit</a>
+                <a id="edit" class="Btn an" href="http://localhost:3000/listings/<%= listing._id %>/edit">Edit</a>
                 <button id="delete" class="btn red">Delete</button>
             </div>
         </div>

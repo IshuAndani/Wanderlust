@@ -6,3 +6,7 @@ del.addEventListener("click", () => {
         req.click();
     }
 });
+
+function goBack() {
+    window.history.back();
+}

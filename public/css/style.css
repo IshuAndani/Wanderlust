@@ -11,13 +11,13 @@
 /****************************************** navbar.ejs ****************************************/
 
 .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: #393E46;
-    padding: 0.1rem;
-    padding-left: 1rem;
-    margin: 0px;
+    position: sticky !important; 
+    top: 0 !important; 
+    z-index: 10 !important; 
+    background-color: #393E46 !important;
+    padding: 0.1rem !important;
+    padding-left: 1rem !important;
+    margin: 0px !important;
 }
 
 .fa-compass{
@@ -202,7 +202,7 @@
     color: white;
 }
 
-.inpForm:-webkit-autofill { 
+.form-control:-webkit-autofill { 
     -webkit-background-clip: text;
     -webkit-text-fill-color: white !important;
 }
@@ -294,13 +294,13 @@
 }
 
 #delete:hover {
-    background-color: #f80606; /* Darker green on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+    background-color: #f80606;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 #delete:active {
-    background-color: #730a0a; /* Even darker green on click */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
+    background-color: #730a0a; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #btns {
@@ -322,12 +322,14 @@
 }
 
 .an:hover{
-    background-color: #45a049; /* Darker green on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
+    background-color: #45a049; 
+    text-decoration: none;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     color: white;
 }
 
 .an:active{
-    background-color: #3e8e41; /* Even darker green on click */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
+    text-decoration: none;
+    background-color: #3e8e41; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

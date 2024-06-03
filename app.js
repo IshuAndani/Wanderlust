@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require('method-override');
 const engine = require('ejs-mate');
+const ExpressError = require("./ExpressError.js");
 
 //models
 const Listing = require("./models/listing.js");
@@ -30,6 +31,12 @@ main()
     .catch(err => {
         console.log(err);
     });
+
+function asyncWrap(fn){
+    return function(req, res, next){
+        fn(req,res,next).catch(err => next(err));
+    }
+}
 
 app.listen(port, () => {
     console.log(`listening to port ${port}`);
@@ -60,29 +67,26 @@ app.post("/listings", async (req, res) => {
     }
 });
 
-app.get("/listings/:id/edit", async (req, res) => {
+app.get("/listings/:id/edit", asyncWrap(async (req, res, next) => {
     const id = req.params.id;
-    try {
-        let listing = await Listing.findById(id);
-        if (listing) {
-            res.render("listings/edit.ejs", { listing });
-        } else {
-            res.status(404).send("Listing not found");
-        }
-    } catch (err) {
-        console.log(err);
-        res.status(500).send("Internal Server Error");
+    let listing = await Listing.findById(id);
+    if (listing) {
+        res.render("listings/edit.ejs", { listing });
+    } else {
+        next(new ExpressError(404, "No listing found"))
     }
-});
+}));
 
-app.get("/listings/:id", async (req, res) => {
-    try {
+app.get("/listings/:id", async (req, res, next) => {
+    try{
         let { id } = req.params;
         let listing = await Listing.findById(id);
+        if(!listing){
+            next(new ExpressError(500, "No listing found"));
+        }
         res.render("listings/view.ejs", { listing });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Internal Server Error");
+    }catch(err){
+        next(err);
     }
 });
 
@@ -107,6 +111,11 @@ app.delete("/listings/:id", async (req, res) => {
         res.status(500).send("Error deleting listing");
     }
 });
+
+app.use((err,req,res,next) => {
+    let {status = 500, message} = err;
+    res.status(status).send(message);
+})
 
 app.get("/testListing", async (req, res) => {
     const sampleListing = new Listing({
