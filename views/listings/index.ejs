@@ -4,7 +4,7 @@
     <% allListings.forEach(listing => { %>
       <div class="listing">
         <a class="indexAnchors" href="/listings/<%= listing._id %>">
-            <img class="listImage" src="<%= listing.image.url %>" alt=""><br>
+            <img class="listImage" src="<%= listing.image %>" alt=""><br>
         </a>
             <div>
             <h4 id="ListTitle" style="font-size: medium; text-align: center; display: inline-block; width: 90%; padding: 5px; margin: 0;"><%= listing.title %></h4>

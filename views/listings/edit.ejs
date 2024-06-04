@@ -1,9 +1,9 @@
 <% layout('layouts/boilerplate') -%>
-<div id="editBody">
+<div class="container" id="editBody">
   <h1 id="page-title">New Listing</h1>
   <form action="http://localhost:3000/listings/<%= listing._id %>?_method=PATCH" method="post" class="needs-validation" novalidate>
-    <div class="form-row">
-      <div class="col-md-3 mb-2 offset-2">
+    <div class="form-row row justify-content-evenly">
+      <div class="col-md-4 mb-2">
         <label class="form-label" for="title">Title:</label>
         <input type="text" name="listing[title]" class="form-control" id="title" placeholder="Title" required value="<%= listing.title %>">
         <div class="invalid-feedback">
@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="col-md-3 mb-2">
+      <div class="col-md-4 mb-2">
         <label class="form-label" for="price">Price:</label>
         <input type="number" class="form-control" name="listing[price]" id="price" placeholder="price" min="0" required value="<%= listing.price %>">
         <div class="invalid-feedback">
@@ -25,10 +25,10 @@
         </div>
       </div>
 
-      <div class="col-md-3 mb-2">
+      <div class="col-md-4 mb-2">
         <label class="form-label" for="country">Country:</label>
         <select name="listing[country]" id="country" class="form-control" required>
-          <option disabled selected value="<%= listing.country %>"><%= listing.country %></option>
+          <option selected value="<%= listing.country %>"><%= listing.country %></option>
           <%- include("../includes/countries.ejs") %>
         </select>
         <div class="invalid-feedback">
@@ -41,13 +41,12 @@
     </div>
 
     <div class="form-row">
-      <div class="col-md-6 mb-4 offset-2">
+      <div class="col-xs-12 col-sm-12 mb-4 col-md-8">
         <label class="form-label" for="image">Image URL:</label>
-          <input type="hidden" name="listing[image.filename]" value="listingimage">
-          <input type="url" class="form-control" name="listing[image.url]" id="image" placeholder="image url" value="<%= listing.image.url %>">
+        <input type="url" class="form-control" name="listing[image]" id="image" placeholder="image url" value="<%= listing.image %>" required>
       </div>
-      
-      <div class="col-md-3 mb-3">
+
+      <div class="col-xs-12 col-sm-12 mb-3 col-md-4">
         <label class="form-label" for="location">Location:</label>
         <input type="text" class="form-control" name="listing[location]" id="location" placeholder="location" required value="<%= listing.location %>">
         <div class="invalid-feedback">
@@ -60,7 +59,7 @@
     </div>
 
     <div class="form-row">
-      <div class="col-md-6 mb-3 offset-2">
+      <div class="col-xs-12 col-sm-12 mb-4 col-md-8">
         <label class="form-label" for="description">Description:</label>
         <textarea type="text" name="listing[description]" class="form-control" id="description" placeholder="Description" required style="height: 150px;"><%= listing.description %></textarea>
         <div class="invalid-feedback">
@@ -70,8 +69,12 @@
           Looks good!
         </div>
       </div>
-      <button style="height: 40px; margin: 20px;" type="submit" class="btn btn-success">Update Listing</button>
-      <button style="height: 40px; margin: 20px;" type="button"  class="btn btn-secondary" onclick="goBack()">Cancel</button>
+      <div class="col align-self-start">
+        <button style="height: 40px; margin: 20px;" type="submit" class="btn btn-success">Update Listing</button>
+      </div>
+      <div class="col align-self-start">
+        <button style="height: 40px; margin: 20px;" type="button" class="btn btn-secondary" onclick="goBack()">Cancel</button>
+      </div>
     </div>
   </form>
 </div>
