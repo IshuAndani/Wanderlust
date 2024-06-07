@@ -80,7 +80,7 @@
                             <div>
                                 <a style="font-size: small; text-decoration: none; color:white;" href="http://localhost:3000/listings/<%= listing._id %>/rating/<%= review._id %>/edit" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <button id="delReview" style="background-color: inherit; border : none; margin: 1rem;"><a style="font-size: small; color: white;" href="#" class="card-link"><i class="fa-solid fa-trash"></i></a></button>
-                              <form style="display: none;" action="http://localhost:3000/listings/<%= listing._id %>/rating/<%= review._id %>?_method=DELETE" method="post">
+                              <form style="display: none;" action="http://localhost:3000/listings/<%= listing._id %>/review/<%= review._id %>?_method=DELETE" method="post">
                                   <button id="reviewDelReq"></button>
                               </form>
                             </div>
@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="leaveReview">
-            <form action="http://localhost:3000/listings/<%= listing._id %>/rating" method="post" id="reviewForm">
+            <form action="http://localhost:3000/listings/<%= listing._id %>/review" method="post" id="reviewForm">
                 <h3>Leave a Review</h3><br>
                 <div style="justify-content: center;" class="form-group">
                     <label for="review[comment]">Comment:</label>
