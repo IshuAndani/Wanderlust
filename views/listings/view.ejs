@@ -31,7 +31,105 @@
     </div>
     <form id="delReq" style="display: none;" method="post" action="http://localhost:3000/listings/<%= listing._id %>?_method=DELETE">
         <button class="delReq"></button>
-    </form>          
+    </form>   
+    <hr>
+
+    <div class="reviews">
+        <div class="viewReviews">
+            <h3>Reviews : </h3>
+            <div class="reviewList">
+                <% listing.reviews.forEach(review => { %>
+                    <div class="card" style="width: 16rem; height: 270px; margin: 0.3rem; background-color: hsl(216, 18%, 16%);">
+                        <div class="card-body">
+                            <h5>Uername</h5>
+                            <div>
+                                <h5 style="display: inline; float: left;" class="card-title">
+                                <% let n = review.rating; let cls = ""; %>
+                                <% if (n == 1) { %>
+                                <% cls = "one"; %>    
+                                <% } %>
+                                <% if (n == 2) { %>
+                                    <% cls = "two"; %>    
+                                <% } %>
+                                <% if (n == 3) { %>
+                                    <% cls = "three"; %>    
+                                <% } %>
+                                <% if (n == 4) { %>
+                                    <% cls = "four"; %>    
+                                <% } %>
+                                <% if(n == 5){ %>
+                                    <% cls = "five"; %>    
+                                <% } %>
+                                <% for(let i = 1; i <= n; i++){ %>
+                                    <span style="font-size: 5vh;" class="<%= cls %>">★</span>
+                                <% } %>
+                          </h5>
+                          <h6 style="font-size: x-small; text-align: right;" class="card-subtitle mb-2 text-body-secondary"><%= review.createdAt %></h6>
+                        </div>
+                          
+                          <p style="
+                            font-size: small;
+                            text-align: left;
+                            overflow: auto;
+                            height: 80px;
+                            text-overflow: ellipsis;
+                            scrollbar-width: none;" 
+                            class="card-text">
+                                <%= review.comment %>
+                            </p>
+                            <div>
+                                <a style="font-size: small; text-decoration: none; color:white;" href="http://localhost:3000/listings/<%= listing._id %>/rating/<%= review._id %>/edit" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <button id="delReview" style="background-color: inherit; border : none; margin: 1rem;"><a style="font-size: small; color: white;" href="#" class="card-link"><i class="fa-solid fa-trash"></i></a></button>
+                              <form style="display: none;" action="http://localhost:3000/listings/<%= listing._id %>/rating/<%= review._id %>?_method=DELETE" method="post">
+                                  <button id="reviewDelReq"></button>
+                              </form>
+                            </div>
+                          
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+        <div class="leaveReview">
+            <form action="http://localhost:3000/listings/<%= listing._id %>/rating" method="post" id="reviewForm">
+                <h3>Leave a Review</h3><br>
+                <div style="justify-content: center;" class="form-group">
+                    <label for="review[comment]">Comment:</label>
+                    <input type="text" style="width: 70vh; height: 20vh;" class="form-control" id="comment" name="review[comment]" placeholder="Write your review here...">
+                </div>
+                <div id="ratingBody">
+                    <div id="card" class="card">
+                        <h5>Rating:</h5> &nbsp;&nbsp;&nbsp;&nbsp;
+                        <br />
+                        <div class="stars">
+                            <span onclick="gfg(1)"
+                                class="star">★
+                            </span>
+                            <span onclick="gfg(2)"
+                                class="star">★
+                            </span>
+                            <span onclick="gfg(3)"
+                                class="star">★
+                            </span>
+                            <span onclick="gfg(4)"
+                                class="star">★
+                            </span>
+                            <span onclick="gfg(5)"
+                                class="star">★
+                            </span>
+                            <span id="output">
+                                0/5
+                            </span>
+                        </div>
+                        <br>
+                        <p style="display: none; color: red; margin: 0;" id="error">Please select rating for listing!</p>
+                        <input type="number" style="display: none;" id="rating" name="review[rating]" min="1" max="5" value="0">
+                    </div>
+                </div>
+                
+                <button id="subBtn" type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+    </div>
+    
 </div>
-</body>
-</html>

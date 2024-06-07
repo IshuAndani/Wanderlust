@@ -70,6 +70,7 @@ body{
     padding: 0;
     background-color: hsl(216, 18%, 16%);
     color: white;
+    min-height: 100vh;
 }
 
 
@@ -219,6 +220,8 @@ body{
 #description {
     resize: vertical;
 }
+ 
+
 /****************************************** view.ejs ************************************************/
 
 #viewBody {
@@ -318,6 +321,131 @@ body{
     text-decoration: none;
     background-color: #3e8e41; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.reviews{
+    display: flex;
+    flex-direction: row;
+}
+
+.viewReviews{
+    flex: 1;
+}
+
+.reviewList{
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 400px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.review{
+    margin: 5px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid white;
+}
+
+.card{
+    opacity: 0.5;
+}
+
+.card a:hover, .card button:hover{
+    scale:1.1 !important;
+}
+
+.card:hover{
+    scale: 1.02;
+    opacity: 1;
+    border-bottom: 1px solid white;
+}
+
+.leaveReview{
+    flex: 1;
+    border-left: 1px solid white;
+}
+
+#ratingBody {
+    display: flex;
+    color: white;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-color: hsl(216, 18%, 16%);
+    font-family: "Poppins", sans-serif;
+}
+    
+#card {
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    max-width: 33rem ;
+    background-color: hsl(216, 18%, 16%);
+    /* margin: 0 1rem; */
+    /* padding: 1rem; */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+    width: 100%;
+    /* border-radius: 0.5rem; */
+}
+    
+.stars{
+    padding: 10px;
+}
+
+.star {
+    cursor: pointer;
+    font-size: 5vh
+}
+
+.stars span:hover{
+    font-size: 7vh;
+}
+    
+.one {
+    color: rgb(255, 0, 0);
+}
+    
+.two {
+    color: rgb(255, 106, 0);
+}
+    
+.three {
+    color: rgb(251, 255, 120);
+}
+    
+.four {
+    color: rgb(255, 255, 0);
+}
+    
+.five {
+    color: rgb(24, 159, 14);
+}    
+
+.one, .two, .three, .four, .five{
+    font-size: 7vh;
+}
+
+#comment{
+    background-color: hsl(216, 18%, 16%);
+    color: white;
+}
+
+#comment:-webkit-autofill { 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: white !important;
 }
 
 /*********************************** error.ejs ******************************************/
