@@ -1,0 +1,65 @@
+<div class="viewReviews">
+    <% if (reviewSuccess && reviewSuccess.length) { %>
+        <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+            <svg style="height: 2em; width : 2em" class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+            <div>
+                <%= reviewSuccess %>
+            </div>  
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> 
+        </div>     
+    <% } %>
+
+    <h3>Reviews : </h3>
+    <div class="reviewList">
+        <% listing.reviews.forEach(review => { %>
+            <div class="card" style="width: 16rem; height: 270px; margin: 0.3rem; background-color: hsl(216, 18%, 16%);">
+                <div class="card-body">
+                    <h5>Uername</h5>
+                    <div>
+                        <h5 style="display: inline; float: left;" class="card-title">
+                        <% let n = review.rating; let cls = ""; %>
+                        <% if (n == 1) { %>
+                        <% cls = "one"; %>    
+                        <% } %>
+                        <% if (n == 2) { %>
+                            <% cls = "two"; %>    
+                        <% } %>
+                        <% if (n == 3) { %>
+                            <% cls = "three"; %>    
+                        <% } %>
+                        <% if (n == 4) { %>
+                            <% cls = "four"; %>    
+                        <% } %>
+                        <% if(n == 5){ %>
+                            <% cls = "five"; %>    
+                        <% } %>
+                        <% for(let i = 1; i <= n; i++){ %>
+                            <span style="font-size: 5vh;" class="<%= cls %>">★</span>
+                        <% } %>
+                  </h5>
+                  <h6 style="font-size: x-small; text-align: right;" class="card-subtitle mb-2 text-body-secondary"><%= review.createdAt %></h6>
+                </div>
+                  
+                  <p style="
+                    font-size: small;
+                    text-align: left;
+                    overflow: auto;
+                    height: 80px;
+                    text-overflow: ellipsis;
+                    scrollbar-width: none;" 
+                    class="card-text">
+                        <%= review.comment %>
+                    </p>
+                    <div>
+                        <a style="font-size: small; text-decoration: none; color:white;" href="http://localhost:3000/listings/<%= listing._id %>/rating/<%= review._id %>/edit" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <button id="delReview" style="background-color: inherit; border : none; margin: 1rem;"><a style="font-size: small; color: white;" href="#" class="card-link"><i class="fa-solid fa-trash"></i></a></button>
+                      <form style="display: none;" action="http://localhost:3000/listings/<%= listing._id %>/review/<%= review._id %>?_method=DELETE" method="post">
+                          <button id="reviewDelReq"></button>
+                      </form>
+                    </div>
+                  
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
