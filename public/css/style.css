@@ -215,6 +215,7 @@ body{
 .form-control:-webkit-autofill { 
     -webkit-background-clip: text;
     -webkit-text-fill-color: white !important;
+    caret-color: white;
 }
 
 #description {

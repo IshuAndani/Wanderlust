@@ -1,0 +1,95 @@
+<% layout('layouts/boilerplate') -%>
+<!-- <form action="http://localhost:3000/signup" method="post">
+    <label style="color: white;" for="username">Username:</label>
+    <input type="text" name="username" id="username">
+    <label style="color: white;" for="email">Email:</label>
+    <input type="email" name="email" id="email">
+    <label style="color: white;" for="password">Password:</label>
+    <input type="password" name="password" id="password">
+    <button>signup</button>
+</form> -->
+<div class="authenticateBody">
+    <div class="wrapper">
+        <div class="title-text">
+            <div class="title login">Login on WanderLust</div>
+            <div class="title signup">Signup on WanderLust</div>
+        </div>
+        <div class="form-container">
+            <div class="slide-controls">
+                <input type="radio" name="slide" id="login" checked>
+                <input type="radio" name="slide" id="signup">
+                <label for="login" class="slide login">Login</label>
+                <label for="signup" class="slide signup">Signup</label>
+                <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+                <form action="http://localhost:3000/users/login" method="post" class="login needs-validation" novalidate>
+                    <div class="field">
+                        <input type="text" class="form-control" name="username" placeholder="username" required>
+                        <div class="invalid-feedback">
+                            Please enter your username!
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <div class="invalid-feedback">
+                            Please enter your password!
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="pass-link"><a href="#">Forgot password?</a></div>
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Login">
+                    </div>
+                    <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+                </form>
+                <form action="http://localhost:3000/users/signup" method="post" id="signupForm" class="signup needs-validation" novalidate>
+                    <div class="field">
+                        <input type="text" class="form-control" name="username" placeholder="username" required>
+                        <div class="invalid-feedback">
+                            Please enter a username for your account!.
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="field">
+                        <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                        <div class="invalid-feedback">
+                            Please enter a valid email address!
+                        </div>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                        <div style="flex: 1; margin-right: 1rem;" class="field">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                            <div class="invalid-feedback">
+                                Please provide a strong password for your account!
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div style="flex: 1; margin-left: 1rem;" class="field">
+                            <input type="password" class="form-control" id="passAgain" name="passAgain" placeholder="Confirm password">
+                            <div id="message"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" id="signupBtn" value="Signup">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>

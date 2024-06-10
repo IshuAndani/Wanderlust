@@ -17,4 +17,20 @@ module.exports.reviewSchema = Joi.object({
     rating : Joi.number().min(1).max(5).required(),
   }).required(),
 });
+
+module.exports.userSignUpSchema = Joi.object({
+  username : Joi.string().required(),
+  email : Joi.string().email().required().messages({
+    'string.empty': 'Email is required',
+    'string.email': 'Please enter a valid email address'
+  }),
+  password : Joi.string().required(),
+  passAgain : Joi.string().valid(Joi.ref('password'))
+  .messages({ 'any.only': 'Passwords do not match' })
+});
+
+module.exports.userLoginSchema = Joi.object({
+  username : Joi.string().required(),
+  password : Joi.string().required()
+})
   

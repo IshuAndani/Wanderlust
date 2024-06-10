@@ -7,13 +7,20 @@ const engine = require('ejs-mate');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+
+
+//models
+const User = require("./models/user.js");
 
 //utils
 const ExpressError = require("./utils/ExpressError.js");
 
 //routes
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/reviews.js");
+const listingsRouter = require("./routes/listing.js");
+const reviewsRouter = require("./routes/reviews.js");
+const usersRouter = require("./routes/users.js");
 
 const app = express();
 const port = 3000;
@@ -42,9 +49,7 @@ main()
         console.log(err);
     });
 
-app.get("/", (req, res) => {
-    res.send("GET request working at root");
-});
+
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
@@ -59,6 +64,12 @@ app.use(session(sessionOptions));
 app.use(cookieParser());
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req,res,next) => {
     res.locals.listingSuccess = req.flash("listingSuccess");
     res.locals.reviewSuccess = req.flash("reviewSuccess");
@@ -66,8 +77,10 @@ app.use((req,res,next) => {
     next();
 })
 
-app.use("/listings", listings);
-app.use("/listings/:id/review", reviews);
+
+app.use("/listings", listingsRouter);
+app.use("/listings/:id/review", reviewsRouter);
+app.use("/users", usersRouter);
 
 app.all("*", (req,res,next) => {
     next(new ExpressError(404, "Page not found"));
@@ -75,7 +88,7 @@ app.all("*", (req,res,next) => {
 
 app.use((err,req,res,next) => {
     let {status = 500, message = "Something went wrong"} = err;
-    res.status(status).render("error.ejs", {error : message});
+    res.status(status).render("error.ejs", {err : message});
 });
 
 app.listen(port, () => {
