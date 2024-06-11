@@ -10,6 +10,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const {userSignUpSchema} = require("../utils/schema.js");
 const {userLoginSchema} = require("../utils/schema.js");
+const { saveRedirectUrl } = require("../utils/middleware.js");
 
 
 //server-side validation middleware
@@ -24,7 +25,6 @@ const validateUserSignUp = (req,res,next) => {
 }
 
 const validateUserLogin = (req,res,next) => {
-    console.log(req.body);
     let results = userLoginSchema.validate(req.body);
     if(results.error){
         let errMsg = results.error.details.map(el => el.message).join(",");
@@ -37,7 +37,7 @@ router.get("/", (req, res) => {
     res.render("authenticate.ejs");
 });
 
-router.post("/signup", validateUserSignUp, (async (req,res,next) => {
+router.post("/signup", validateUserSignUp, saveRedirectUrl, (async (req,res,next) => {
     try{
         let {username, email, password} = req.body;
         let user = new User({
@@ -45,23 +45,52 @@ router.post("/signup", validateUserSignUp, (async (req,res,next) => {
             username : username
         });
         let registeredUser = await User.register(user, password);
-        console.log("new User registered : ", registeredUser);
-        req.flash("listingSuccess", "Welcome to Wanderlust!");
-        res.redirect("/listings");
+        req.logIn(registeredUser, (err) => {
+            if(err){
+                next(err);
+            }
+            else{
+                console.log("new User registered : ", registeredUser);
+                req.flash("listingSuccess", "Welcome to Wanderlust!");
+                if(res.locals.redirectUrl){
+                    res.redirect(res.locals.redirectUrl);
+                }else{
+                    res.redirect("/listings");
+                }
+            }
+        })
     }catch(err){
         req.flash("error", err.message);
         res.redirect("/users");
     }
 }));
 
-router.post("/login", validateUserLogin, passport.authenticate('local', { 
+router.post("/login", validateUserLogin, saveRedirectUrl, passport.authenticate('local', { 
     failureRedirect: '/users' , 
     failureFlash : true
     }), 
     async(req,res) => {
         req.flash("listingSuccess", "LogIn Successful!");
-        res.redirect("/listings");
+        console.log("User logged in : ", req.user);
+        if(res.locals.redirectUrl){
+            res.redirect(res.locals.redirectUrl);
+        }else{
+            res.redirect("/listings");
+        }
     }
 );
+
+router.get("/logout", (req,res,next) => {
+    req.logout((err) => {
+        if(err){
+            next(err);
+        }
+        else {
+            console.log("logged out");
+            req.flash("listingSuccess", "Logged Out Successfully!");
+            res.redirect("/listings");
+        }
+    })
+})
 
 module.exports = router;

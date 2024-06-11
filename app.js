@@ -74,12 +74,13 @@ app.use((req,res,next) => {
     res.locals.listingSuccess = req.flash("listingSuccess");
     res.locals.reviewSuccess = req.flash("reviewSuccess");
     res.locals.error = req.flash("error");
+    res.locals.user = req.user;
     next();
 })
 
 
 app.use("/listings", listingsRouter);
-app.use("/listings/:id/review", reviewsRouter);
+app.use("/listings/:id", reviewsRouter);
 app.use("/users", usersRouter);
 
 app.all("*", (req,res,next) => {

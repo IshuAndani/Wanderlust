@@ -1,40 +1,53 @@
 <div class="leaveReview">
-    <form action="http://localhost:3000/listings/<%= listing._id %>/review" method="post" id="reviewForm">
+    <form action="http://localhost:3000/listings/<%= listing._id %>" method="post" id="reviewForm">
         <h3>Leave a Review</h3><br>
-        <div style="justify-content: center;" class="form-group">
-            <label for="comment">Comment:</label>
-            <input type="text" style="width: 70vh; height: 20vh;" class="form-control" id="comment" name="review[comment]" placeholder="Write your review here...">
-        </div>
-        <div id="ratingBody">
-            <div id="card" class="card">
-                <h5>Rating:</h5> &nbsp;&nbsp;&nbsp;&nbsp;
-                <br />
-                <div class="stars">
-                    <span onclick="gfg(1)"
-                        class="star">★
-                    </span>
-                    <span onclick="gfg(2)"
-                        class="star">★
-                    </span>
-                    <span onclick="gfg(3)"
-                        class="star">★
-                    </span>
-                    <span onclick="gfg(4)"
-                        class="star">★
-                    </span>
-                    <span onclick="gfg(5)"
-                        class="star">★
-                    </span>
-                    <span id="output">
-                        0/5
-                    </span>
+        <% if (!user) { %>
+                <div style="margin: 1rem;" class="alert alert-warning" role="alert">
+                    You must <form style="display: inline;"
+                        action="http://localhost:3000/users?id=<%= listing._id %>"
+                        method="post">
+                        <button type="submit" style="background-color: inherit; border: none; padding: 0; margin: 0; text-decoration: underline; font-weight: bold;"
+                        >Login or Signup </button>
+                        to post a review!</form><a href="" class="alert-link"></a> 
                 </div>
-                <br>
-                <p style="display: none; color: red; margin: 0;" id="error">Please select rating for listing!</p>
-                <input type="number" style="display: none;" id="rating" name="review[rating]" min="1" max="5" value="0">
+        <% } %>
+        <% if (user) { %>
+            <div style="justify-content: center;" class="form-group">
+                <label for="comment">Comment:</label>
+                <input type="text" style="width: 70vh; height: 20vh;" class="form-control" id="comment" name="review[comment]" placeholder="Write your review here...">
             </div>
-        </div>
+            <div id="ratingBody">
+                <div id="card" class="card">
+                    <h5>Rating:</h5> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <br />
+                    <div class="stars">
+                        <span onclick="gfg(1)"
+                            class="star">★
+                        </span>
+                        <span onclick="gfg(2)"
+                            class="star">★
+                        </span>
+                        <span onclick="gfg(3)"
+                            class="star">★
+                        </span>
+                        <span onclick="gfg(4)"
+                            class="star">★
+                        </span>
+                        <span onclick="gfg(5)"
+                            class="star">★
+                        </span>
+                        <span id="output">
+                            0/5
+                        </span>
+                    </div>
+                    <br>
+                    <p style="display: none; color: red; margin: 0;" id="error">Please select rating for listing!</p>
+                    <input type="number" style="display: none;" id="rating" name="review[rating]" min="1" max="5" value="0">
+                </div>
+            </div>
+            
+            <button style="width: auto;" id="subBtn" type="submit" class="btn btn-primary">Submit Review</button>
+        <% } %>
         
-        <button style="width: auto;" id="subBtn" type="submit" class="btn btn-primary">Submit Review</button>
     </form>
 </div>

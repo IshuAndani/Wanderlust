@@ -12,6 +12,11 @@
                 <span style="font-size: 30px; width: min-content;"><%= listing.title %></span>
             </b>
             <br>
+            <i style="font-size: small;">owned by : <%= listing.owner.username %></i>
+            <% if (user && user.equals(listing.owner)) { %>
+                (You)
+            <% } %>
+            <br>
             <br>
             <p><%= listing.description %></p>
             <br>
@@ -25,10 +30,12 @@
             <b>Country : </b><i><%= listing.country %></i>
             <br>
             <br>
-            <div id="btns">
-                <a id="edit" class="Btn an" href="http://localhost:3000/listings/<%= listing._id %>/edit">Edit</a>
-                <button id="delete" class="btn red">Delete</button>
-            </div>
+            <% if (user && user._id.equals(listing.owner._id)) { %>
+                <div id="btns">
+                    <a id="edit" class="Btn an" href="http://localhost:3000/listings/<%= listing._id %>/edit">Edit</a>
+                    <button id="delete" class="btn red">Delete</button>
+                </div>
+            <% } %>
         </div>
     </div>
     <form id="delReq" style="display: none;" method="post" action="http://localhost:3000/listings/<%= listing._id %>?_method=DELETE">

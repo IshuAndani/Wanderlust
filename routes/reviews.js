@@ -9,6 +9,7 @@ const Review = require("../models/review.js");
 const ExpressError = require("../utils/ExpressError.js");
 const wrapAsync = require("../utils/wrapAsync.js");
 const {reviewSchema} = require("../utils/schema.js");
+const {isLoggedIn} = require("../utils/middleware.js");
 
 //server-side validation middleware
 const validateReview = (req,res,next) => {
@@ -21,9 +22,9 @@ const validateReview = (req,res,next) => {
     next();
 }
 
-router.post("/", validateReview, wrapAsync(async (req,res,next) => {
+router.post("/", isLoggedIn, validateReview, wrapAsync(async (req,res,next) => {
     let id = req.params.id;
-    let newReview = new Review(req.body.review);
+    let newReview = new Review({ createdBy : res.locals.user , ...req.body.review });
     let listing = await Listing.findById(id);
     await listing.reviews.unshift(newReview);
     await newReview.save();
@@ -33,7 +34,7 @@ router.post("/", validateReview, wrapAsync(async (req,res,next) => {
     res.redirect(`/listings/${id}`);
 }));
 
-router.delete("/:reviewId", wrapAsync(async (req,res, next) => {
+router.delete("/:reviewId", isLoggedIn, wrapAsync(async (req,res, next) => {
     let {id, reviewId} = req.params;
     let listing = await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     let review = await Review.findByIdAndDelete(reviewId);

@@ -1,6 +1,7 @@
 const del = document.querySelector("#delete");
 const req = document.querySelector(".delReq");
-del.addEventListener("click", async () => {
+try{
+  del.addEventListener("click", async () => {
     if (window.confirm('Are you sure you want to delete this listing?')) {
       try {
         await req.click(); // Wait for deletion to complete
@@ -10,6 +11,10 @@ del.addEventListener("click", async () => {
       }
     }
 });
+}catch(err){
+  console.log(err);
+}
+
   
 
 function goBack() {

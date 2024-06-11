@@ -14,7 +14,7 @@
         <% listing.reviews.forEach(review => { %>
             <div class="card" style="width: 16rem; height: 270px; margin: 0.3rem; background-color: hsl(216, 18%, 16%);">
                 <div class="card-body">
-                    <h5>Uername</h5>
+                    <h5><%= review.createdBy.username %></h5>
                     <div>
                         <h5 style="display: inline; float: left;" class="card-title">
                         <% let n = review.rating; let cls = ""; %>
@@ -50,14 +50,15 @@
                     class="card-text">
                         <%= review.comment %>
                     </p>
-                    <div>
-                        <a style="font-size: small; text-decoration: none; color:white;" href="http://localhost:3000/listings/<%= listing._id %>/rating/<%= review._id %>/edit" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <button id="delReview" style="background-color: inherit; border : none; margin: 1rem;"><a style="font-size: small; color: white;" href="#" class="card-link"><i class="fa-solid fa-trash"></i></a></button>
-                      <form style="display: none;" action="http://localhost:3000/listings/<%= listing._id %>/review/<%= review._id %>?_method=DELETE" method="post">
-                          <button id="reviewDelReq"></button>
-                      </form>
-                    </div>
-                  
+                    <% if (review.createdBy.equals(user) || listing.owner.equals(user)) { %>
+                        <div>
+                            <a style="font-size: small; text-decoration: none; color:white;" href="http://localhost:3000/listings/<%= listing._id %>/rating/<%= review._id %>/edit" class="card-link"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <button id="delReview" style="background-color: inherit; border : none; margin: 1rem;"><a style="font-size: small; color: white;" href="#" class="card-link"><i class="fa-solid fa-trash"></i></a></button>
+                          <form style="display: none;" action="http://localhost:3000/listings/<%= listing._id %>/<%= review._id %>?_method=DELETE" method="post">
+                              <button id="reviewDelReq"></button>
+                          </form>
+                        </div>
+                    <% } %>
                 </div>
             </div>
         <% }) %>
