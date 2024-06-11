@@ -23,7 +23,7 @@ const reviewsRouter = require("./routes/reviews.js");
 const usersRouter = require("./routes/users.js");
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const dbName = "wanderlust";
 const MONGO_URL = `mongodb://localhost:27017/${dbName}`;
 const sessionOptions = {
@@ -82,6 +82,14 @@ app.use((req,res,next) => {
 app.use("/listings", listingsRouter);
 app.use("/listings/:id", reviewsRouter);
 app.use("/users", usersRouter);
+
+app.get("/", (req,res,next) => {
+    try{
+        res.redirect("/listings");
+    }catch(err){
+        next(new ExpressError(500, "Error loading homepage"));
+    }
+})
 
 app.all("*", (req,res,next) => {
     next(new ExpressError(404, "Page not found"));
