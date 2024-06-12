@@ -7,19 +7,7 @@ const Listing = require("../models/listing.js");
 //utils
 const ExpressError = require("../utils/ExpressError.js");
 const wrapAsync = require("../utils/wrapAsync.js");
-const {listingSchema} = require("../utils/schema.js");
-const { isLoggedIn } = require("../utils/middleware.js");
-
-//server-side validation middleware
-const validateListing = (req,res,next) => {
-    console.log(req.body);
-    let results = listingSchema.validate(req.body);
-    if(results.error){
-        let errMsg = results.error.details.map(el => el.message).join(",");
-        next(new ExpressError(400, errMsg));
-    }
-    next();
-}
+const { isLoggedIn, isOwner, validateListing } = require("../utils/middleware.js");
 
 router.get("/", wrapAsync(async (req, res) => {
     const allListings = await Listing.find({});
@@ -56,7 +44,7 @@ router.get("/:id", wrapAsync(async (req, res, next) => {
     res.render("listings/view.ejs", { listing });
 }));
 
-router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res, next) => {
+router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(async (req, res, next) => {
     const id = req.params.id;
     let listing = await Listing.findById(id);
     if (listing) {
@@ -70,7 +58,7 @@ router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res, next) => {
 
 
 
-router.patch("/:id", isLoggedIn, validateListing,  wrapAsync(async (req, res, next) => {
+router.patch("/:id", isLoggedIn, isOwner, validateListing,  wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     await Listing.findByIdAndUpdate(id, req.body.listing, { new: true, runValidators: true });
     console.log("Listing updated");
@@ -79,7 +67,7 @@ router.patch("/:id", isLoggedIn, validateListing,  wrapAsync(async (req, res, ne
 }));
 
 
-router.delete("/:id", isLoggedIn, wrapAsync(async (req, res, next) => {
+router.delete("/:id", isLoggedIn, isOwner, wrapAsync(async (req, res, next) => {
     const { id } = req.params;
     let listing = await Listing.findByIdAndDelete(id);
     if(!listing){

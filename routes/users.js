@@ -7,31 +7,7 @@ const User = require("../models/user");
 
 //utils
 const ExpressError = require("../utils/ExpressError.js");
-const wrapAsync = require("../utils/wrapAsync.js");
-const {userSignUpSchema} = require("../utils/schema.js");
-const {userLoginSchema} = require("../utils/schema.js");
-const { saveRedirectUrl } = require("../utils/middleware.js");
-
-
-//server-side validation middleware
-const validateUserSignUp = (req,res,next) => {
-    console.log(req.body);
-    let results = userSignUpSchema.validate(req.body);
-    if(results.error){
-        let errMsg = results.error.details.map(el => el.message).join(",");
-        next(new ExpressError(400, errMsg));
-    }
-    next();
-}
-
-const validateUserLogin = (req,res,next) => {
-    let results = userLoginSchema.validate(req.body);
-    if(results.error){
-        let errMsg = results.error.details.map(el => el.message).join(",");
-        next(new ExpressError(400, errMsg));
-    }
-    next();
-}
+const { saveRedirectUrl, validateUserLogin, validateUserSignUp } = require("../utils/middleware.js");
 
 router.get("/", (req, res) => {
     res.render("authenticate.ejs");

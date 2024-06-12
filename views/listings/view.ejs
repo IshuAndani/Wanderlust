@@ -5,7 +5,7 @@
         <br>
         <div id="about">
             <a style="text-decoration: none; color: white;" href="/listings">
-                <button style="padding: 0.3em;" id="close" class="red">x</button>
+                <button style="padding: 0.3em; padding-top: 0; padding-bottom: 0;" id="close" class="red">x</button>
             </a>
             <br>
             <b>
@@ -18,7 +18,7 @@
             <% } %>
             <br>
             <br>
-            <p><%= listing.description %></p>
+            <p style="max-height: 6.25rem; overflow-y: scroll; scrollbar-width: none;"><%= listing.description %></p>
             <br>
             <br>
             <b>Price : </b>&#8377;<i><%= listing.price.toLocaleString('en-IN'); %></i> / night
@@ -35,7 +35,7 @@
                     <a id="edit" class="Btn an" href="http://localhost:3000/listings/<%= listing._id %>/edit">Edit</a>
                     <button id="delete" class="btn red">Delete</button>
                 </div>
-            <% } %>
+            <% } %> 
         </div>
     </div>
     <form id="delReq" style="display: none;" method="post" action="http://localhost:3000/listings/<%= listing._id %>?_method=DELETE">

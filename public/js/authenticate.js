@@ -3,7 +3,8 @@ const msg = document.getElementById("message");
 const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('passAgain');
 
-signupForm.addEventListener('submit', function(event) {
+try{
+  signupForm.addEventListener('submit', function(event) {
     if (passwordInput.value !== confirmPasswordInput.value) {
       msg.textContent = 'Passwords do not match!';
       msg.style.color = 'red';  
@@ -13,7 +14,10 @@ signupForm.addEventListener('submit', function(event) {
       confirmPasswordInput.style.backgroundImage = `url(${imgUrl})`;
     };
     return false;
-});
+  });
+}catch(err){
+  console.log(err);
+}
 
 const loginText = document.querySelector(".title-text .login");
 const loginForm = document.querySelector("form.login");
@@ -24,20 +28,35 @@ const signupLink = document.querySelector("form .signup-link a");
 const loginRadio = document.getElementById("login");
 const signRadio = document.getElementById("signup");
 
-signupBtn.onclick = (()=>{
-  loginForm.style.marginLeft = "-50%";
-  loginText.style.marginLeft = "-50%";
-});
-loginBtn.onclick = (()=>{
-  loginForm.style.marginLeft = "0%";
-  loginText.style.marginLeft = "0%";
-});
-signupLink.onclick = (()=>{
-  signupBtn.click();
-  return false;
-});
+try {
+  signupBtn.onclick = (()=>{
+    loginForm.style.marginLeft = "-50%";
+    loginText.style.marginLeft = "-50%";
+  });
+} catch (error) {
+  console.log(error);
+}
 
-document.addEventListener('DOMContentLoaded', function() {
+try {
+  loginBtn.onclick = (()=>{
+    loginForm.style.marginLeft = "0%";
+    loginText.style.marginLeft = "0%";
+  });
+} catch (error) {
+  console.log(error);
+}
+
+try {
+  signupLink.onclick = (()=>{
+    signupBtn.click();
+    return false;
+  });
+} catch (error) {
+  console.log(error);
+}
+
+try {
+  document.addEventListener('DOMContentLoaded', function() {
     if(loginRadio.checked){
         loginBtn.click();
     }
@@ -46,3 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         loginBtn.click();
     }
 });
+} catch (error) {
+  console.log(error);
+}

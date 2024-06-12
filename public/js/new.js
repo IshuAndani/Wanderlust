@@ -1,4 +1,5 @@
-(() => {
+try {
+  (() => {
     'use strict'
   
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
@@ -15,6 +16,9 @@
       }, false);
     })
 })();
+} catch (error) {
+  console.log(error);
+}
 
 function goBack() {
   window.history.back();
