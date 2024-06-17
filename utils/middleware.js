@@ -49,6 +49,7 @@ module.exports.validateListing = (req,res,next) => {
     let results = listingSchema.validate(req.body);
     if(results.error){
         let errMsg = results.error.details.map(el => el.message).join(",");
+        console.log(results.error);
         next(new ExpressError(400, errMsg));
     }
     next();

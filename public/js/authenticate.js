@@ -55,8 +55,9 @@ try {
   console.log(error);
 }
 
-try {
-  document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function() {
+  try {
     if(loginRadio.checked){
         loginBtn.click();
     }
@@ -64,7 +65,7 @@ try {
     if(loginRadio.checked){
         loginBtn.click();
     }
+  }catch (error) {
+    console.log(error);
+  }
 });
-} catch (error) {
-  console.log(error);
-}

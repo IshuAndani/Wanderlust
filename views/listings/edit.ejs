@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') -%>
 <div class="container" id="editBody">
   <h1 id="page-title">Update Listing</h1>
-  <form action="http://localhost:3000/listings/<%= listing._id %>?_method=PATCH" method="post" class="needs-validation" novalidate>
+  <form action="http://localhost:3000/listings/<%= listing._id %>?_method=PATCH" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
     <div class="form-row row justify-content-evenly">
       <div class="col-md-4 mb-2">
         <label class="form-label" for="title">Title:</label>
@@ -42,8 +42,8 @@
 
     <div class="form-row">
       <div class="col-xs-12 col-sm-12 mb-4 col-md-8">
-        <label class="form-label" for="image">Image URL:</label>
-        <input type="url" class="form-control" name="listing[image]" id="image" placeholder="image url" value="<%= listing.image %>" required>
+        <label class="form-label" for="image">Upload New Image:</label>
+        <input type="file" class="form-control" name="listing[image]" id="image" placeholder="image url" value="<%= listing.image %>">
       </div>
 
       <div class="col-xs-12 col-sm-12 mb-3 col-md-4">
@@ -59,7 +59,7 @@
     </div>
 
     <div class="form-row">
-      <div class="col-xs-12 col-sm-12 mb-4 col-md-8">
+      <div class="col-xs-12 col-sm-12 mb-4 col-md-7">
         <label class="form-label" for="description">Description:</label>
         <textarea type="text" name="listing[description]" class="form-control" id="description" placeholder="Description" required style="height: 150px;"><%= listing.description %></textarea>
         <div class="invalid-feedback">
@@ -69,12 +69,20 @@
           Looks good!
         </div>
       </div>
-      <div class="col align-self-start">
-        <button style="height: 40px; margin: 20px;" type="submit" class="btn btn-success">Update Listing</button>
-      </div>
-      <div class="col align-self-start">
-        <button style="height: 40px; margin: 20px;" type="button" class="btn btn-secondary" onclick="goBack()">Cancel</button>
-      </div>
+      <!-- <div style="display: flex; flex-direction: column;"> -->
+        <div class="previewImage" >
+          Original Image: <br>
+          <img src="<%= imageLink %>" alt="" style="height: 150px; width: 200px;">
+        </div>
+        <div id="buttons">
+          <div class="col align-self-start">
+            <button style="height: 40px; margin: 20px; margin-left: 0;" type="submit" class="btn btn-success">Update Listing</button>
+          </div>
+          <div class="col align-self-start">
+            <button style="height: 40px; margin: 20px;" type="button" class="btn btn-secondary" onclick="goBack()">Cancel</button>
+          </div>
+        </div>
+      <!-- </div> -->
     </div>
   </form>
 </div>

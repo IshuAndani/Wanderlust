@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV != "production"){
+    require('dotenv').config();
+}
+
 //modules
 const express = require("express");
 const mongoose = require("mongoose");
@@ -9,7 +13,6 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
-
 
 //models
 const User = require("./models/user.js");
@@ -98,6 +101,7 @@ app.all("*", (req,res,next) => {
 app.use((err,req,res,next) => {
     let {status = 500, message = "Something went wrong"} = err;
     res.status(status).render("error.ejs", {err : message});
+    console.log(err);
 });
 
 app.listen(port, () => {
